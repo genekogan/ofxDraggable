@@ -111,8 +111,7 @@ bool ofxDraggable::mouseMoved(ofMouseEventArgs &e) {
             minDist = dist;
         }
     }
-    isChanged = active != NULL;
-    return isChanged;
+    return active != NULL;
 }
 
 //--------------------------------------------------------------
@@ -126,7 +125,8 @@ bool ofxDraggable::mouseDragged(ofMouseEventArgs &e) {
     float x = e.x - bbox.x;
     float y = e.y - bbox.y;
     active->mouseDragged(x, y);
-    return true;
+    isChanged = true;
+    return isChanged;
 }
 
 //--------------------------------------------------------------
