@@ -37,12 +37,7 @@ void ofxDraggablePoint::setActive(bool active) {
 //--------------------------------------------------------------
 void ofxDraggablePoint::draw() {
     ofPushStyle();
-    //cout << "is hover " << isHover << " " <<dist << endl;
-    if (active) {
-        ofSetColor(ofColor::green);
-    } else {
-        ofSetColor(ofColor::red);
-    }
+    ofSetColor(active ? ofColor::red : ofColor::green);
     ofDrawEllipse(point.x, point.y, 20, 20);
     ofPopStyle();
 }
@@ -52,8 +47,18 @@ ofxDraggable::ofxDraggable() {
     active = NULL;
     autoListen = false;
     isChanged = false;
+    cActive = ofColor::green;
+    cRegular = ofColor::red;
     distThresh = 10;
     bbox.set(0, 0, 1e8, 1e8);
+}
+
+//--------------------------------------------------------------
+ofxDraggable::~ofxDraggable() {
+    for (auto p : points) {
+        delete p;
+    }
+    points.clear();
 }
 
 //--------------------------------------------------------------
@@ -87,9 +92,12 @@ void ofxDraggable::setBoundingBox(int x, int y, int w, int h) {
 void ofxDraggable::draw() {
     ofPushMatrix();
     ofTranslate(bbox.x, bbox.y);
+    ofPushStyle();
     for (auto p : points) {
-        p->draw();
+        ofSetColor(p->getActive() ? cActive : cRegular);
+        ofDrawEllipse(p->get().x, p->get().y, 20, 20);
     }
+    ofPopStyle();
     ofPopMatrix();
 }
 

@@ -12,6 +12,7 @@ public:
     void set(ofPoint p) {point.set(p);}
     void set(int x, int y) {set(ofPoint(x, y));}
     ofPoint get() {return point;}
+    bool getActive() {return active;}
     
     float mouseMoved(int x, int y);
     bool mousePressed(int x, int y);
@@ -25,9 +26,12 @@ protected:
     float dist;
 };
 
+
+
 class ofxDraggable {
 public:
     ofxDraggable();
+    ~ofxDraggable();
     
     void setBoundingBox(int x, int y, int w, int h);
     ofRectangle getBoundingBox() {return bbox;}
@@ -44,18 +48,26 @@ public:
 
     void setAuto(bool autoListen);
 
+    void setActiveColor(ofColor cActive) {this->cActive = cActive;}
+    void setRegularColor(ofColor cRegular) {this->cRegular = cRegular;}
+    ofColor getRegularColor() {return cRegular;}
+    ofColor getActiveColor() {return cActive;}
+    
     bool mouseMoved(ofMouseEventArgs &e);
     void mousePressed(ofMouseEventArgs &e);
     bool mouseDragged(ofMouseEventArgs &e);
     void mouseReleased(ofMouseEventArgs &e);
     
 protected:
+    
     bool autoListen;
     bool isChanged;
     vector<ofxDraggablePoint*> points;
     ofxDraggablePoint *active;
     float distThresh;
     ofRectangle bbox;
+    ofColor cActive;
+    ofColor cRegular;
 };
 
 
