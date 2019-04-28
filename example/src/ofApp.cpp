@@ -5,10 +5,10 @@ void ofApp::setup(){
 
     draggable.setAuto(true);
     
-    draggable.addPoint(50, 50);
-    draggable.addPoint(350, 50);
-    draggable.addPoint(350, 350);
-    draggable.addPoint(50, 350);
+    draggable.addPoint(150, 150);
+    draggable.addPoint(450, 150);
+    draggable.addPoint(450, 450);
+    draggable.addPoint(150, 450);
     
 }
 
@@ -25,6 +25,8 @@ void ofApp::draw(){
         ofPoint p = draggable.get(i);
         ofLog() << p;
     }
+    
+    ofDrawBitmapString("drag the points!", 10, 20);
 }
 
 //--------------------------------------------------------------
