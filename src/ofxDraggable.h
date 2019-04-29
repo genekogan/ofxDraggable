@@ -53,11 +53,16 @@ public:
     ofColor getRegularColor() {return cRegular;}
     ofColor getActiveColor() {return cActive;}
     
+    bool mouseMoved(int x, int y);
+    void mousePressed(int x, int y);
+    bool mouseDragged(int x, int y);
+    void mouseReleased(int x, int y);
+
     bool mouseMoved(ofMouseEventArgs &e);
     void mousePressed(ofMouseEventArgs &e);
     bool mouseDragged(ofMouseEventArgs &e);
     void mouseReleased(ofMouseEventArgs &e);
-    
+
 protected:
     
     bool autoListen;

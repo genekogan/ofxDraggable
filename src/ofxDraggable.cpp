@@ -102,16 +102,24 @@ void ofxDraggable::draw() {
 }
 
 //--------------------------------------------------------------
-bool ofxDraggable::mouseMoved(ofMouseEventArgs &e) {
+bool ofxDraggable::getIsChanged() {
+    if (isChanged) {
+        isChanged = false;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//--------------------------------------------------------------
+bool ofxDraggable::mouseMoved(int x, int y) {
     active = NULL;
     for (auto p : points) {
         p->setActive(false);
     }
     float minDist = 1e8;
     for (auto p : points) {
-        float x = e.x - bbox.x;
-        float y = e.y - bbox.y;
-        float dist = p->mouseMoved(x, y);
+        float dist = p->mouseMoved(x - bbox.x, y - bbox.y);
         if (dist < minDist && dist < distThresh) {
             if (active != NULL) active->setActive(false);
             active = p;
@@ -123,31 +131,40 @@ bool ofxDraggable::mouseMoved(ofMouseEventArgs &e) {
 }
 
 //--------------------------------------------------------------
-void ofxDraggable::mousePressed(ofMouseEventArgs &e) {
+void ofxDraggable::mousePressed(int x, int y) {
     
 }
 
 //--------------------------------------------------------------
-bool ofxDraggable::mouseDragged(ofMouseEventArgs &e) {
+bool ofxDraggable::mouseDragged(int x, int y) {
     if (active == NULL) return false;
-    float x = e.x - bbox.x;
-    float y = e.y - bbox.y;
-    active->mouseDragged(x, y);
+    active->mouseDragged(x - bbox.x, y - bbox.y);
     isChanged = true;
     return isChanged;
 }
 
 //--------------------------------------------------------------
-bool ofxDraggable::getIsChanged() {
-    if (isChanged) {
-        isChanged = false;
-        return true;
-    } else {
-        return false;
-    }
+void ofxDraggable::mouseReleased(int x, int y) {
+}
+
+//--------------------------------------------------------------
+bool ofxDraggable::mouseMoved(ofMouseEventArgs &e){
+    return mouseMoved(e.x, e.y);
+}
+
+//--------------------------------------------------------------
+void ofxDraggable::mousePressed(ofMouseEventArgs &e) {
+    mousePressed(e.x, e.y);
+}
+
+//--------------------------------------------------------------
+bool ofxDraggable::mouseDragged(ofMouseEventArgs &e) {
+    return mouseDragged(e.x, e.y);
 }
 
 //--------------------------------------------------------------
 void ofxDraggable::mouseReleased(ofMouseEventArgs &e) {
+    mouseReleased(e.x, e.y);
 }
+
 
