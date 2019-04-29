@@ -15,18 +15,19 @@ float ofxDraggablePoint::mouseMoved(int x, int y) {
 
 //--------------------------------------------------------------
 bool ofxDraggablePoint::mousePressed(int x, int y) {
-    
+    return active;
 }
 
 //--------------------------------------------------------------
 bool ofxDraggablePoint::mouseDragged(int x, int y) {
-    if (!active) return;
+    if (!active) return false;
     point.set(x, y);
+    return true;
 }
 
 //--------------------------------------------------------------
 bool ofxDraggablePoint::mouseReleased(int x, int y) {
-    
+    return active;
 }
 
 //--------------------------------------------------------------
