@@ -7,6 +7,8 @@ public:
     ofxDraggablePoint(int x, int y);
     
     void setActive(bool active);
+    void setEllipseSize(int ellipseSize){this->ellipseSize=ellipseSize;}
+
     void draw();
     
     void set(ofPoint p) {point.set(p);}
@@ -24,6 +26,7 @@ protected:
     ofPoint point;
     bool active;
     float dist;
+    int ellipseSize;
 };
 
 
@@ -52,7 +55,10 @@ public:
     void setRegularColor(ofColor cRegular) {this->cRegular = cRegular;}
     ofColor getRegularColor() {return cRegular;}
     ofColor getActiveColor() {return cActive;}
-    
+
+    void setEllipseSize(int ellipseSize);
+    int getEllipseSize() {return ellipseSize;}
+
     bool mouseMoved(int x, int y);
     void mousePressed(int x, int y);
     bool mouseDragged(int x, int y);
@@ -73,6 +79,7 @@ protected:
     ofRectangle bbox;
     ofColor cActive;
     ofColor cRegular;
+    int ellipseSize;
 };
 
 

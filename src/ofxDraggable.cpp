@@ -5,6 +5,7 @@
 ofxDraggablePoint::ofxDraggablePoint(int x, int y) {
     point = ofPoint(x, y);
     active = false;
+    ellipseSize = 20;
 }
 
 //--------------------------------------------------------------
@@ -39,7 +40,7 @@ void ofxDraggablePoint::setActive(bool active) {
 void ofxDraggablePoint::draw() {
     ofPushStyle();
     ofSetColor(active ? ofColor::red : ofColor::green);
-    ofDrawEllipse(point.x, point.y, 20, 20);
+    ofDrawEllipse(point.x, point.y, ellipseSize, ellipseSize);
     ofPopStyle();
 }
 
@@ -84,6 +85,14 @@ void ofxDraggable::setAuto(bool autoListen) {
     }
 }
 
+//--------------------------------------------------------------
+void ofxDraggable::setEllipseSize(int ellipseSize) {
+    this->ellipseSize = ellipseSize;
+    for (auto p : points) {
+        p->setEllipseSize(ellipseSize);
+    }
+}
+    
 //--------------------------------------------------------------
 void ofxDraggable::setBoundingBox(int x, int y, int w, int h) {
     bbox.set(x, y, w, h);
@@ -139,7 +148,7 @@ void ofxDraggable::mousePressed(int x, int y) {
 //--------------------------------------------------------------
 bool ofxDraggable::mouseDragged(int x, int y) {
     if (active == NULL) return false;
-    active->mouseDragged(x - bbox.x, y - bbox.y);
+    active->mouseDragged(ofClamp(x - bbox.x, 0, bbox.width), ofClamp(y - bbox.y, 0, bbox.height));
     isChanged = true;
     return isChanged;
 }
