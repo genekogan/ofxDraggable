@@ -105,7 +105,7 @@ void ofxDraggable::draw() {
     ofPushStyle();
     for (auto p : points) {
         ofSetColor(p->getActive() ? cActive : cRegular);
-        ofDrawEllipse(p->get().x, p->get().y, 20, 20);
+        ofDrawEllipse(p->get().x, p->get().y, ellipseSize, ellipseSize);
     }
     ofPopStyle();
     ofPopMatrix();
