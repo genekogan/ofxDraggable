@@ -7,6 +7,7 @@ ofxDraggablePoint::ofxDraggablePoint(int x, int y) {
     active = false;
     ellipseSize = 20;
     msg = "";
+    msgWidth = 0;
     cActive = ofColor::red;
     cRegular = ofColor::green;
 }
