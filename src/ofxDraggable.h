@@ -8,7 +8,10 @@ public:
     
     void setActive(bool active);
     void setEllipseSize(int ellipseSize){this->ellipseSize=ellipseSize;}
-
+    void setActiveColor(ofColor cActive) {this->cActive = cActive;}
+    void setRegularColor(ofColor cRegular) {this->cRegular = cRegular;}
+    void setMessage(string msg);
+    
     void draw();
     
     void set(ofPoint p) {point.set(p);}
@@ -27,6 +30,10 @@ protected:
     bool active;
     float dist;
     int ellipseSize;
+    ofColor cActive;
+    ofColor cRegular;
+    string msg;
+    int msgWidth;
 };
 
 
@@ -45,14 +52,15 @@ public:
     bool getIsChanged();
     
     int size() {return points.size();}
+    ofxDraggablePoint * getPoint(int idx) {return points[idx];}
     ofPoint get(int idx) {return points[idx]->get();}
     void set(int idx, float x, float y) {points[idx]->set(x, y);}
     void set(int idx, ofPoint p) {points[idx]->set(p);}
 
     void setAuto(bool autoListen);
 
-    void setActiveColor(ofColor cActive) {this->cActive = cActive;}
-    void setRegularColor(ofColor cRegular) {this->cRegular = cRegular;}
+    void setActiveColor(ofColor cActive);
+    void setRegularColor(ofColor cRegular);
     ofColor getRegularColor() {return cRegular;}
     ofColor getActiveColor() {return cActive;}
 

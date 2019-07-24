@@ -6,6 +6,9 @@ ofxDraggablePoint::ofxDraggablePoint(int x, int y) {
     point = ofPoint(x, y);
     active = false;
     ellipseSize = 20;
+    msg = "";
+    cActive = ofColor::red;
+    cRegular = ofColor::green;
 }
 
 //--------------------------------------------------------------
@@ -37,10 +40,19 @@ void ofxDraggablePoint::setActive(bool active) {
 }
 
 //--------------------------------------------------------------
+void ofxDraggablePoint::setMessage(string msg) {
+    this->msg = msg;
+    ofBitmapFont bitmapFont;
+    msgWidth = bitmapFont.getBoundingBox(msg, 0, 0).getWidth();
+}
+
+//--------------------------------------------------------------
 void ofxDraggablePoint::draw() {
     ofPushStyle();
-    ofSetColor(active ? ofColor::red : ofColor::green);
+    ofSetColor(active ? cActive : cRegular);
     ofDrawEllipse(point.x, point.y, ellipseSize, ellipseSize);
+    ofSetColor(255);
+    ofDrawBitmapStringHighlight(msg, point.x - msgWidth/2, point.y + 6);
     ofPopStyle();
 }
 
@@ -92,7 +104,23 @@ void ofxDraggable::setEllipseSize(int ellipseSize) {
         p->setEllipseSize(ellipseSize);
     }
 }
-    
+
+//--------------------------------------------------------------
+void ofxDraggable::setActiveColor(ofColor cActive) {
+    this->cActive = cActive;
+    for (auto p : points) {
+        p->setActiveColor(this->cActive);
+    }
+}
+
+//--------------------------------------------------------------
+void ofxDraggable::setRegularColor(ofColor cRegular) {
+    this->cRegular = cRegular;
+    for (auto p : points) {
+        p->setRegularColor(this->cRegular);
+    }
+}
+
 //--------------------------------------------------------------
 void ofxDraggable::setBoundingBox(int x, int y, int w, int h) {
     bbox.set(x, y, w, h);
@@ -104,8 +132,7 @@ void ofxDraggable::draw() {
     ofTranslate(bbox.x, bbox.y);
     ofPushStyle();
     for (auto p : points) {
-        ofSetColor(p->getActive() ? cActive : cRegular);
-        ofDrawEllipse(p->get().x, p->get().y, ellipseSize, ellipseSize);
+        p->draw();
     }
     ofPopStyle();
     ofPopMatrix();
